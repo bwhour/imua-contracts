@@ -45,7 +45,7 @@ echo
 
 # Step 10: Send a transaction to deposit to an address
 echo "Depositing to address..."
-deposit_output=$(cast send --rpc-url $RPC_URL --private-key "$PRIVATE_KEY" --gas-limit 1000000 $BRIDGE_ADDRESS "depositTo(uint32,bytes,bytes,uint256)" ${CLIENT_CHAIN_ID} $TOKEN_ADDRESS_BYTES $BTC_ADDRESS_BYTES 2222)
+deposit_output=$(cast send --rpc-url $RPC_URL --private-key "$PRIVATE_KEY" --gas-limit 1000000 $BRIDGE_ADDRESS "depositLST(uint32,bytes,bytes,uint256)" ${CLIENT_CHAIN_ID} $TOKEN_ADDRESS_BYTES $BTC_ADDRESS_BYTES 2222)
 echo "Deposit output:"
 echo "$deposit_output"
 echo
