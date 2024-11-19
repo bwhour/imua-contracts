@@ -11,7 +11,7 @@ import {OwnableUpgradeable} from "@openzeppelin/contracts-upgradeable/access/Own
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import {PausableUpgradeable} from "@openzeppelin/contracts-upgradeable/security/PausableUpgradeable.sol";
 import {ReentrancyGuardUpgradeable} from "@openzeppelin/contracts-upgradeable/security/ReentrancyGuardUpgradeable.sol";
-// import "forge-std/console.sol";
+ import "forge-std/console.sol";
 /**
  * @title ExocoreBtcGateway
  * @dev This contract manages the gateway between Bitcoin and the Exocore system.
@@ -205,8 +205,9 @@ contract ExocoreBtcGateway is
             _msg.txTag,
             _msg.payload
         );
+        console.logBytes(encodeMsg);
         bytes32 messageHash = keccak256(encodeMsg);
-
+        console.logBytes32(messageHash);
         SignatureVerifier.verifyMsgSig(msg.sender, messageHash, signature);
     }
 
@@ -239,7 +240,7 @@ contract ExocoreBtcGateway is
         if (depositor.length == 0) {
             revert BtcAddressNotRegistered();
         }
-
+        console.log("verify addr done");
         if (processedBtcTxs[btcTxTag].processed) {
             revert BtcTxAlreadyProcessed();
         }
@@ -249,6 +250,7 @@ contract ExocoreBtcGateway is
 
         // Verify signature
         _verifySignature(_msg, signature);
+        console.log("verify sig done, nonce: ", _msg.nonce);
     }
 
     /**
@@ -349,7 +351,7 @@ contract ExocoreBtcGateway is
         if (!success) {
             revert DepositFailed(btcTxTag);
         }
-        // console.log("depositTo success");
+         console.log("depositTo success");
         emit DepositCompleted(btcTxTag, depositorExoAddr, BTC_ADDR, _msg.srcAddress, _msg.amount, updatedBalance);
     }
 
