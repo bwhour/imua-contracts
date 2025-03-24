@@ -15,8 +15,8 @@ contract UTXOGatewayStorage {
      */
     enum Token {
         NONE, // 0: Invalid/uninitialized token
-        BTC // 1: Bitcoin token, matches with ClientChainID.Bitcoin
-
+        BTC, // 1: Bitcoin token, matches with ClientChainID.Bitcoin
+        XRP
     }
 
     /**
@@ -25,8 +25,8 @@ contract UTXOGatewayStorage {
      */
     enum ClientChainID {
         NONE, // 0: Invalid/uninitialized chain
-        BITCOIN // 1: Bitcoin chain, matches with Token.BTC
-
+        BITCOIN, // 1: Bitcoin chain, matches with Token.BTC
+        XRP
     }
 
     /**
@@ -117,13 +117,25 @@ contract UTXOGatewayStorage {
     uint8 public constant STAKER_ACCOUNT_LENGTH = 20;
 
     // virtual token address and token, shared for tokens supported by the gateway
-    address public constant VIRTUAL_TOKEN_ADDRESS = 0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB;
+    address public constant VIRTUAL_TOKEN_ADDRESS = 0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC;
     bytes public constant VIRTUAL_TOKEN = abi.encodePacked(bytes32(bytes20(VIRTUAL_TOKEN_ADDRESS)));
 
     uint8 public constant BTC_DECIMALS = 8;
     string public constant BTC_NAME = "BTC";
     string public constant BTC_METADATA = "BTC";
     string public constant BTC_ORACLE_INFO = "BTC,BITCOIN,8";
+
+    // the virtual chain id for XRP, compatible with other chain ids(endpoint ids) maintained by layerzero
+    string public constant XRP_NAME = "XRP";
+    string public constant XRP_METADATA = "XRP";
+    string public constant XRP_SIGNATURE_SCHEME = "ECDSA";
+
+    // virtual token address and token, shared for tokens supported by the gateway
+    address public constant VIRTUAL_XRP_TOKEN_ADDRESS = 0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC;
+    bytes public constant VIRTUAL_XRP_TOKEN = abi.encodePacked(bytes32(bytes20(VIRTUAL_XRP_TOKEN_ADDRESS)));
+
+    uint8 public constant XRP_DECIMALS = 6;
+    string public constant XRP_ORACLE_INFO = "XRP,XRP,6";
 
     uint256 public constant PROOF_TIMEOUT = 1 days;
     uint256 public bridgeFeeRate; // e.g., 100 (basis points) means 1%
