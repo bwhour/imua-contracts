@@ -10,7 +10,9 @@ contract AssetsMock is IAssets {
 
     address constant VIRTUAL_STAKED_ETH_ADDRESS = 0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE;
     address constant VIRTUAL_STAKED_BTC_ADDRESS = 0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB;
+    address constant VIRTUAL_STAKED_XRP_ADDRESS = 0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC;
     uint32 internal constant clientBtcChainId = 1;
+    uint32 internal constant clientXrpChainId = 2;
 
     mapping(uint32 => mapping(bytes => mapping(bytes => uint256))) public principalBalances;
     mapping(bytes => mapping(bytes => bool)) public inValidatorSet;
@@ -42,8 +44,10 @@ contract AssetsMock is IAssets {
         // If the assetsAddress is not the virtual ETH/BTC address, check if the token is registered
         bool notEth = bytes32(assetsAddress) != bytes32(bytes20(VIRTUAL_STAKED_ETH_ADDRESS));
         bool notBtc = bytes32(assetsAddress) != bytes32(bytes20(VIRTUAL_STAKED_BTC_ADDRESS));
+        bool notXrp = bytes32(assetsAddress) != bytes32(bytes20(VIRTUAL_STAKED_XRP_ADDRESS));
         console.log("notEth ", notEth, " notBtc", notBtc);
-        if (notEth && notBtc) {
+        console.log("notXrp", notXrp);
+        if (notEth && notBtc && notXrp) {
             require(isRegisteredToken[clientChainLzId][assetsAddress], "the token not registered");
         }
 
@@ -78,8 +82,10 @@ contract AssetsMock is IAssets {
         bytes32 assetAddressBytes32 = bytes32(assetsAddress);
         bool isEth = assetAddressBytes32 == bytes32(bytes20(VIRTUAL_STAKED_ETH_ADDRESS));
         bool isBtc = assetAddressBytes32 == bytes32(bytes20(VIRTUAL_STAKED_BTC_ADDRESS));
+        bool isXrp = assetAddressBytes32 == bytes32(bytes20(VIRTUAL_STAKED_XRP_ADDRESS));
 
         console.log("isEth ", isEth, " isBtc", isBtc);
+        console.log("isXrp", isXrp);
         // Disallow ETH withdrawals or non-registered tokens (except BTC)
         if (isEth || (!isRegisteredToken[clientChainLzId][assetsAddress] && !isBtc)) {
             return (false, 0);

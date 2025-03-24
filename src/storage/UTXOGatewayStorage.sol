@@ -131,7 +131,7 @@ contract UTXOGatewayStorage {
     string public constant XRP_SIGNATURE_SCHEME = "ECDSA";
 
     // virtual token address and token, shared for tokens supported by the gateway
-    address public constant VIRTUAL_XRP_TOKEN_ADDRESS = 0xCcCCccccCCCCcCCCCCCcCcCccCcCCCcCcccccccC;
+    address public constant VIRTUAL_XRP_TOKEN_ADDRESS = 0xbBbBBBBbbBBBbbbBbbBbbbbBBbBbbbbBbBbbBBbB;
     bytes public constant VIRTUAL_XRP_TOKEN = abi.encodePacked(bytes32(bytes20(VIRTUAL_XRP_TOKEN_ADDRESS)));
 
     uint8 public constant XRP_DECIMALS = 6;
